@@ -37,27 +37,14 @@ func (p7 *PKCS7) Decrypt(cert *x509.Certificate, pkey crypto.PrivateKey) ([]byte
 		var contentKey []byte
 		contentKey, err := rsa.DecryptPKCS1v15(rand.Reader, pkey, recipient.EncryptedKey)
 		if err == nil {
-			fmt.Println("PKCS1.5 decryption")
 			return data.EncryptedContentInfo.decrypt(contentKey)
 		}
 		contentKey, err = rsa.DecryptOAEP(sha256.New(), rand.Reader, pkey, recipient.EncryptedKey, []byte{})
 		if err == nil {
-			fmt.Println("RSA-OAEP-SHA256 decryption")
 			return data.EncryptedContentInfo.decrypt(contentKey)
 		}
 		contentKey, err = rsa.DecryptOAEP(sha1.New(), rand.Reader, pkey, recipient.EncryptedKey, []byte{})
 		if err == nil {
-			fmt.Println("RSA-OAEP-SHA1 decryption")
-			return data.EncryptedContentInfo.decrypt(contentKey)
-		}
-		contentKey, err = rsa.DecryptOAEP(sha256.New(), rand.Reader, pkey, recipient.EncryptedKey, []byte("AIK"))
-		if err == nil {
-			fmt.Println("RSA-OAEP-SHA256 decryption with label 'AIK'")
-			return data.EncryptedContentInfo.decrypt(contentKey)
-		}
-		contentKey, err = rsa.DecryptOAEP(sha1.New(), rand.Reader, pkey, recipient.EncryptedKey, []byte("AIK"))
-		if err == nil {
-			fmt.Println("RSA-OAEP-SHA1 decryption with label 'AIK'")
 			return data.EncryptedContentInfo.decrypt(contentKey)
 		}
 		return nil, err
