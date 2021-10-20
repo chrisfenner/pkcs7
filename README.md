@@ -1,3 +1,5 @@
+This fork exists to expose some PKCS structure interactions for the [TPM Carte Blanche](https://github.com/google/security-research/tree/master/pocs/bios/tpm-carte-blanche) PoC at https://github.com/google/security-research. You probably don't want this fork.
+
 # pkcs7
 
 [![GoDoc](https://godoc.org/go.mozilla.org/pkcs7?status.svg)](https://godoc.org/go.mozilla.org/pkcs7)
